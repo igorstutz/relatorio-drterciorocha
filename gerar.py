@@ -35,33 +35,33 @@ corpo = corpo.replace("addEventListener('pointerleave', () => {", "addEventListe
 assert 'id="publico"' in corpo and 'id="ajustes"' in corpo
 
 TOKENS = """
-  /* Identidade do site: marinho, azul, osso, dourado e jade. */
+  /* Identidade do site num fundo marinho bem escuro, igual em qualquer tema do aparelho. */
   :root {
-    color-scheme: light;
-    --color-bg: #faf7f1;
-    --color-panel: #ffffff;
-    --color-fg: #0c1a36;
-    --color-fg-muted: #59657c;
-    --color-border-line: #e9e1d2;
-    --color-ok: #2f7c68;
-    --color-warn: #a5843e;
-    --color-bad: #b3261e;
-    --cds-chart-categorical-1: #244c9a;
-    --cds-chart-categorical-2: #c4a056;
-    --cds-chart-categorical-3: #2f7c68;
-    --cds-chart-categorical-4: #5d8fe0;
-    --cds-chart-categorical-5: #a5843e;
-    --cds-chart-categorical-6: #4d9a86;
-    --cds-chart-categorical-7: #132650;
-    --cds-chart-categorical-8: #d9bd78;
-    --cds-chart-muted: #a7afc0;
-    --cds-chart-grid: #eee8dc;
-    --cds-chart-axis: #d3c9b6;
-    --cds-chart-reference: #8a93a6;
-    --cds-surface-popover: #ffffff;
-    --cds-border: #e3d9c7;
-    --cds-shadow-popover: 0 10px 28px rgba(10, 23, 51, 0.14);
-    --cds-text-secondary: #59657c;
+    color-scheme: dark;
+    --color-bg: #050a17;
+    --color-panel: #0a1530;
+    --color-fg: #f1ebe0;
+    --color-fg-muted: #a3aec4;
+    --color-border-line: #172649;
+    --color-ok: #6fbca6;
+    --color-warn: #e8d3a0;
+    --color-bad: #f08a80;
+    --cds-chart-categorical-1: #6f9ce6;
+    --cds-chart-categorical-2: #d9bd78;
+    --cds-chart-categorical-3: #4d9a86;
+    --cds-chart-categorical-4: #9dbcf2;
+    --cds-chart-categorical-5: #c4a056;
+    --cds-chart-categorical-6: #6fbca6;
+    --cds-chart-categorical-7: #3567c4;
+    --cds-chart-categorical-8: #f2e4c4;
+    --cds-chart-muted: #4f5f86;
+    --cds-chart-grid: #142247;
+    --cds-chart-axis: #26396a;
+    --cds-chart-reference: #7d89a6;
+    --cds-surface-popover: #112249;
+    --cds-border: #22396b;
+    --cds-shadow-popover: 0 10px 28px rgba(0, 0, 0, 0.5);
+    --cds-text-secondary: #a3aec4;
     --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 16px; --cds-gap-xl: 24px;
     --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-pad-xl: 32px;
     --cds-radius: 12px;
@@ -71,37 +71,7 @@ TOKENS = """
     --cds-ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
     --font-anthropic-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-anthropic-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-    --nav-bg: rgba(250, 247, 241, 0.88);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-      --color-bg: #0a1733;
-      --color-panel: #0d1d3f;
-      --color-fg: #f1ebe0;
-      --color-fg-muted: #a3aec4;
-      --color-border-line: #1e3263;
-      --color-ok: #6fbca6;
-      --color-warn: #e8d3a0;
-      --color-bad: #f08a80;
-      --cds-chart-categorical-1: #6f9ce6;
-      --cds-chart-categorical-2: #d9bd78;
-      --cds-chart-categorical-3: #4d9a86;
-      --cds-chart-categorical-4: #9dbcf2;
-      --cds-chart-categorical-5: #c4a056;
-      --cds-chart-categorical-6: #6fbca6;
-      --cds-chart-categorical-7: #3567c4;
-      --cds-chart-categorical-8: #f2e4c4;
-      --cds-chart-muted: #4f5f86;
-      --cds-chart-grid: #182a52;
-      --cds-chart-axis: #2a4072;
-      --cds-chart-reference: #7d89a6;
-      --cds-surface-popover: #132650;
-      --cds-border: #243d73;
-      --cds-shadow-popover: 0 10px 28px rgba(0, 0, 0, 0.45);
-      --cds-text-secondary: #a3aec4;
-      --nav-bg: rgba(10, 23, 51, 0.86);
-    }
+    --nav-bg: rgba(5, 10, 23, 0.86);
   }
 """
 
@@ -153,7 +123,7 @@ EXTRA = """
       radial-gradient(90% 120% at 100% 0%, rgba(93, 143, 224, 0.32) 0%, transparent 55%),
       radial-gradient(70% 110% at 0% 100%, rgba(196, 160, 86, 0.22) 0%, transparent 60%),
       linear-gradient(160deg, #132650 0%, #0a1733 70%);
-    box-shadow: 0 18px 40px rgba(10, 23, 51, 0.18);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   }
   .lr-hero h1 { color: #ffffff; }
   .lr-hero .lr-sw--a { background: var(--cds-chart-categorical-1); }
@@ -268,7 +238,7 @@ html = f"""<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0a1733">
+<meta name="theme-color" content="#050a17">
 <title>Relatório do site · Dr. Tércio Rocha</title>
 <meta name="description" content="Google Analytics 4 do site novo do Dr. Tércio Rocha, de 19 a 29 de outubro de 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
