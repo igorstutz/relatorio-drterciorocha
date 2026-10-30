@@ -186,6 +186,14 @@
 
   /* Páginas */
   .lr-treemap { position: relative; min-height: 300px; }
+  .lr-treemap--lista { min-height: 0; display: grid; gap: 16px; }
+  .lr-sec { display: grid; gap: 5px; }
+  .lr-sec-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .lr-sec-top strong { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); }
+  .lr-sec-top b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .lr-sec-bar { height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--lr-m) 18%, transparent); overflow: hidden; }
+  .lr-sec-bar i { display: block; height: 100%; border-radius: 5px; }
+  .lr-sec small { font-size: 11.5px; color: var(--color-fg-muted); }
   .lr-tile { position: absolute; border-radius: calc(var(--cds-radius) * 0.8); padding: 8px 10px; overflow: hidden; display: grid; align-content: start; gap: 2px; border: 1px solid transparent; }
   .lr-tile strong { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); line-height: 1.25; }
   .lr-tile b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 0.85); line-height: 1.1; }
@@ -402,7 +410,7 @@
     <div class="lr-grid">
       <div class="lr-card">
         <h3>Visualizações por seção do site</h3>
-        <p class="lr-note">O tamanho de cada bloco é o número de visualizações da seção.</p>
+        <p class="lr-note">Quanto maior o bloco ou a barra, mais visualizações a seção teve.</p>
         <div class="lr-treemap" id="grafico-secoes" data-draw="treemap" data-source="secoes"></div>
       </div>
       <div class="lr-card">
@@ -1209,6 +1217,29 @@
     const rows = r[0].filter((s) => num(s.visualizacoes) > 0);
     el.replaceChildren();
     if (!rows.length) return;
+    /* Em tela estreita os blocos ficam pequenos demais para o nome: vira uma lista de barras. */
+    if ((el.clientWidth || 0) < 480) {
+      el.style.height = '';
+      el.classList.add('lr-treemap--lista');
+      const soma = d3.sum(rows, (d) => num(d.visualizacoes)) || 1;
+      const maior = d3.max(rows, (d) => num(d.visualizacoes)) || 1;
+      [...rows].sort((a, b) => num(b.visualizacoes) - num(a.visualizacoes)).forEach((d, i) => {
+        const linha = make('div', 'lr-sec');
+        const topo = make('div', 'lr-sec-top');
+        const nome = make('strong', null, d.nome);
+        if (SECOES_NOVAS.has(d.secao)) nome.append(make('span', 'lr-new-chip', 'nova'));
+        topo.append(nome, make('b', null, LR.nf.format(num(d.visualizacoes))));
+        const trilho = make('div', 'lr-sec-bar');
+        const barra = make('i', LR.grow());
+        barra.style.width = `${Math.max(2, (num(d.visualizacoes) / maior) * 100)}%`;
+        barra.style.background = C.cat(i);
+        trilho.append(barra);
+        linha.append(topo, trilho, make('small', null, `${LR.FMT.pct0(num(d.visualizacoes) / soma)} das visualizações · ${LR.nf.format(num(d.leads))} leads`));
+        el.append(linha);
+      });
+      return;
+    }
+    el.classList.remove('lr-treemap--lista');
     const W = Math.max(240, el.clientWidth || 480), H = 300;
     el.style.height = `${H}px`;
     const root = d3.hierarchy({children: rows}).sum((d) => num(d.visualizacoes)).sort((a, b) => b.value - a.value);
