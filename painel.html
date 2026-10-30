@@ -1,0 +1,1239 @@
+<meta name="dash-one-writer">
+<style>
+  .lr {
+    --lr-a: var(--cds-chart-categorical-1);
+    --lr-b: var(--cds-chart-categorical-2);
+    --lr-c: var(--cds-chart-categorical-3);
+    --lr-m: var(--cds-chart-muted);
+    container: lr / inline-size;
+    display: grid; gap: calc(var(--cds-gap-xl) * 1.5); font-family: var(--font-anthropic-sans);
+    padding-block: var(--cds-pad-sm) var(--cds-pad-xl);
+  }
+  .lr h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 1.35); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .lr h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; margin: 0; text-wrap: balance; }
+  .lr h3 { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .lr b { font-variant-numeric: tabular-nums; }
+  .lr-eyebrow { margin: 0; font-size: var(--cds-font-size-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--lr-a); font-weight: var(--cds-font-weight-medium); }
+  .lr-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+  .lr .lr-note b { color: var(--color-fg); font-weight: 600; }
+  .lr-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-md); align-content: start; min-width: 0; container-type: inline-size; }
+  .lr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+  .lr-section { display: grid; gap: var(--cds-gap-md); }
+  .lr-sh { display: grid; gap: var(--cds-gap-xs); max-width: 70ch; }
+
+  /* Abertura */
+  .lr-hero {
+    display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 1fr); gap: var(--cds-gap-xl); align-items: center;
+    padding: calc(var(--cds-pad-lg) * 1.4); border-radius: calc(var(--cds-radius) * 2); border: 1px solid var(--color-border-line);
+    background:
+      radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--lr-a) 16%, transparent) 0%, transparent 55%),
+      radial-gradient(90% 120% at 0% 100%, color-mix(in srgb, var(--lr-b) 10%, transparent) 0%, transparent 60%),
+      var(--color-panel);
+  }
+  @container lr (max-width: 46rem) { .lr-hero { grid-template-columns: 1fr; } }
+  .lr-hero-text { display: grid; gap: var(--cds-gap-md); min-width: 0; }
+  .lr-take { margin: 0; font-size: var(--cds-font-size-body); line-height: 1.65; max-width: 62ch; }
+  .lr .lr-take b { font-weight: 600; color: var(--lr-a); }
+  .lr-hero-ring { display: grid; justify-items: center; gap: var(--cds-gap-md); }
+  .lr-ring { position: relative; width: 100%; max-width: 12rem; aspect-ratio: 1; }
+  .lr-ring svg { display: block; width: 100%; height: auto; }
+  .lr-ring-num { font-family: var(--font-anthropic-serif); font-size: 46px; fill: var(--color-fg); }
+  .lr-ring-cap { font-size: 13px; fill: var(--color-fg-muted); }
+  .lr-ring-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: var(--cds-font-size-caption); width: 100%; max-width: 15rem; }
+  .lr-ring-legend li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; }
+  .lr-ring-legend .lr-conv { grid-template-columns: 1fr auto; padding-top: 6px; border-top: 1px solid var(--color-border-line); color: var(--color-fg-muted); }
+
+  .lr-sw { display: inline-block; width: 0.65rem; height: 0.65rem; border-radius: 3px; background: var(--lr-a); }
+  .lr-sw--a { background: var(--lr-a); }
+  .lr-sw--b { background: var(--lr-b); }
+  .lr-sw--m { background: var(--lr-m); }
+  .lr-sw--dot { border-radius: 50%; }
+  .lr-sw--line { height: 3px; width: 1rem; border-radius: 2px; }
+
+  /* Números */
+  .lr-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: var(--cds-gap-md); }
+  .lr-kpi { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg) var(--cds-pad-sm); display: grid; gap: 4px; align-content: start; min-width: 0; }
+  .lr-kpi-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr-kpi-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; font-variant-numeric: tabular-nums; min-height: 1.15em; }
+  .lr-spark { position: relative; height: 40px; margin-inline: calc(var(--cds-pad-sm) * -0.5); }
+  .lr-spark svg { display: block; overflow: visible; }
+  .lr-kpi-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.4; }
+
+  /* Gráficos */
+  .lr-chart { position: relative; min-height: 260px; }
+  .lr-chart svg, .lr-tilemap svg, .lr-clock svg { display: block; overflow: visible; }
+  .lr-tick { fill: var(--color-fg-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .lr-peak { fill: var(--color-fg); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .lr-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-lg); list-style: none; padding: 0; margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr-legend li { display: inline-flex; align-items: center; gap: 6px; }
+  .lr-tip { position: absolute; top: 0; left: 0; z-index: 3; pointer-events: none; white-space: nowrap; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; display: grid; gap: 2px; }
+  .lr-tip-h { color: var(--cds-text-secondary); }
+  .lr-tip i { display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 2px; margin-right: 0.4rem; }
+
+  /* Funil */
+  .lr-funnel { display: grid; gap: var(--cds-gap-sm); }
+  .lr-funnel-shape { position: relative; min-height: 140px; }
+  .lr-funnel-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); text-align: center; }
+  .lr-funnel-steps li { display: grid; gap: 2px; justify-items: center; padding-inline: 4px; }
+  .lr-funnel-steps b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; }
+  .lr-funnel-steps span { font-size: var(--cds-font-size-caption); line-height: 1.3; }
+  .lr-funnel-steps small { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .lr-drop { font-size: 11px; font-weight: 600; fill: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .lr-drop--worst { fill: var(--color-bad); }
+
+  /* Eventos */
+  .lr-events { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); gap: var(--cds-gap-sm); min-height: 6rem; }
+  .lr-ev { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); display: grid; gap: 2px; align-content: start; }
+  .lr-ev b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 0.8); line-height: 1.1; }
+  .lr-ev span { font-size: var(--cds-font-size-caption); line-height: 1.35; }
+  .lr-ev code { font-size: 11px; color: var(--color-fg-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+  .lr-ev--own { border-color: color-mix(in srgb, var(--lr-a) 45%, var(--color-border-line)); background: color-mix(in srgb, var(--lr-a) 8%, transparent); }
+  .lr-ev--own b { color: var(--lr-a); }
+
+  /* Origens */
+  .lr-src-head, .lr-src-row { display: grid; grid-template-columns: minmax(8.5rem, 1.1fr) minmax(0, 1.4fr) minmax(0, 1.4fr) 4.5rem; gap: var(--cds-gap-md); align-items: center; }
+  .lr-src-head { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding-bottom: 4px; border-bottom: 1px solid var(--color-border-line); }
+  .lr-src-head span { display: inline-flex; align-items: center; gap: 6px; }
+  .lr-src-head span:last-child { justify-content: flex-end; }
+  .lr-src { display: grid; min-height: 10rem; }
+  .lr-src-row { padding-block: 10px; border-bottom: 1px solid var(--color-border-line); }
+  .lr-src-row:last-child { border-bottom: 0; }
+  .lr-src-name { display: grid; gap: 1px; min-width: 0; }
+  .lr-src-name b { font-weight: var(--cds-font-weight-medium); }
+  .lr-src-name small { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr-src-bar { display: grid; grid-template-columns: 1fr 3.2rem; align-items: center; gap: 8px; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .lr-src-bar > div { height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--lr-m) 22%, transparent); overflow: hidden; }
+  .lr-src-bar i { display: block; height: 100%; border-radius: 5px; }
+  .lr-src-bar span { text-align: right; }
+  .lr-src-conv { justify-self: end; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--lr-a) 12%, transparent); }
+  .lr-src-conv--zero { background: transparent; color: var(--color-fg-muted); }
+  @container (max-width: 34rem) {
+    .lr-src-head { display: none; }
+    .lr-src-row { grid-template-columns: 1fr auto; row-gap: 6px; }
+    .lr-src-name { grid-column: 1; }
+    .lr-src-conv { grid-column: 2; grid-row: 1; }
+    .lr-src-bar { grid-column: 1 / -1; grid-template-columns: 4.5rem 1fr 3rem; }
+    .lr-src-bar::before { content: attr(data-label); color: var(--color-fg-muted); }
+  }
+
+  /* Páginas */
+  .lr-treemap { position: relative; min-height: 300px; }
+  .lr-tile { position: absolute; border-radius: calc(var(--cds-radius) * 0.8); padding: 8px 10px; overflow: hidden; display: grid; align-content: start; gap: 2px; border: 1px solid transparent; }
+  .lr-tile strong { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); line-height: 1.25; }
+  .lr-tile b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 0.85); line-height: 1.1; }
+  .lr-tile small { font-size: 11px; color: var(--color-fg-muted); }
+  .lr-new { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--cds-gap-xl); align-items: center; padding: calc(var(--cds-pad-lg) * 1.2); border-radius: calc(var(--cds-radius) * 1.5); border: 1px solid color-mix(in srgb, var(--lr-a) 35%, var(--color-border-line)); background: radial-gradient(110% 160% at 0% 0%, color-mix(in srgb, var(--lr-a) 12%, transparent) 0%, transparent 60%), var(--color-panel); }
+  @container lr (max-width: 46rem) { .lr-new { grid-template-columns: 1fr; } }
+  .lr-new-text { display: grid; gap: var(--cds-gap-sm); min-width: 0; }
+  .lr-new-text p { margin: 0; font-size: var(--cds-font-size-body); line-height: 1.6; max-width: 60ch; }
+  .lr-new-text code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+  .lr .lr-new-text b { color: var(--lr-a); font-weight: 600; }
+  .lr-new-stats { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cds-gap-md); }
+  .lr-new-stats div { display: grid; gap: 2px; align-content: start; padding-left: var(--cds-pad-md); border-left: 2px solid color-mix(in srgb, var(--lr-a) 40%, transparent); }
+  .lr-new-stats dd { margin: 0; order: -1; font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .lr-new-stats dt { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.35; }
+  .lr-new-chip { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 1px; background: color-mix(in srgb, var(--lr-a) 16%, transparent); color: var(--lr-a); }
+  .lr-tile em { font-style: normal; justify-self: start; margin-left: 0; }
+  .lr-pages { display: grid; max-height: 30rem; overflow: auto; min-height: 10rem; }
+  .lr-page { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr) minmax(5rem, 9rem) 4.5rem 4rem; gap: var(--cds-gap-sm); align-items: center; padding-block: 8px; border-bottom: 1px solid var(--color-border-line); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .lr-page-rank { color: var(--color-fg-muted); text-align: right; }
+  .lr-page-name { display: grid; min-width: 0; }
+  .lr-page-name strong { font-weight: var(--cds-font-weight-medium); overflow-wrap: anywhere; }
+  .lr-page-name code { font-size: 11px; color: var(--color-fg-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+  .lr-page-bar { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; }
+  .lr-page-bar i { display: block; height: 8px; border-radius: 4px; background: var(--lr-a); }
+  .lr-page-time { text-align: right; color: var(--color-fg-muted); }
+  .lr-chip { justify-self: end; padding: 1px 8px; border-radius: 999px; background: color-mix(in srgb, var(--lr-b) 16%, transparent); white-space: nowrap; }
+  .lr-chip--zero { background: transparent; color: var(--color-fg-muted); }
+  .lr-page-head { position: sticky; top: 0; z-index: 1; background: var(--color-panel); color: var(--color-fg-muted); padding-block: 0 6px; }
+  .lr-page-head span:nth-child(n+4) { text-align: right; }
+  @container (max-width: 30rem) {
+    .lr-page { grid-template-columns: 1.4rem minmax(0, 1fr) auto; }
+    .lr-page-bar { grid-column: 2 / -1; }
+    .lr-page-time { grid-column: 2; text-align: left; }
+    .lr-page-head { display: none; }
+  }
+
+  /* Público */
+  .lr-tilemap { position: relative; display: flex; justify-content: center; min-height: 300px; }
+  .lr-uf { font-size: 11px; font-weight: 600; }
+  .lr-ufn { font-size: 10px; font-variant-numeric: tabular-nums; }
+  .lr-cities { display: grid; gap: 8px; min-height: 10rem; }
+  .lr-city { display: grid; grid-template-columns: 1.4rem minmax(0, 9rem) 1fr; gap: var(--cds-gap-sm); align-items: center; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .lr-city-rank { color: var(--color-fg-muted); text-align: right; }
+  .lr-city-name { display: grid; min-width: 0; }
+  .lr-city-name small { color: var(--color-fg-muted); font-size: 11px; }
+  .lr-city-bar { display: flex; align-items: center; gap: 8px; }
+  .lr-city-bar i { display: block; flex: none; height: 10px; max-width: calc(100% - 6rem); border-radius: 5px; background: var(--lr-a); }
+  .lr-city-bar span { white-space: nowrap; }
+  .lr-split { display: grid; gap: var(--cds-gap-md); min-height: 8rem; }
+  .lr-split-row { display: grid; gap: 6px; }
+  .lr-split-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr-split-bar { display: flex; height: 38px; border-radius: var(--cds-radius); overflow: hidden; gap: 2px; }
+  .lr-split-bar div { display: flex; align-items: center; padding-inline: 10px; min-width: 0; color: var(--color-bg); font-size: var(--cds-font-size-caption); font-weight: 600; white-space: nowrap; overflow: hidden; }
+  .lr-split-legend { display: grid; gap: 4px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr-split-legend div { display: flex; align-items: center; gap: 8px; }
+  .lr-split-legend b { color: var(--color-fg); font-weight: 600; }
+  .lr-clock { position: relative; display: flex; justify-content: center; min-height: 260px; }
+  .lr-clock-peak { font-family: var(--font-anthropic-serif); font-size: 30px; fill: var(--color-fg); }
+  .lr-clock-cap { font-size: 11px; fill: var(--color-fg-muted); }
+  .lr-strip { margin: 0; display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .lr .lr-strip b { color: var(--color-fg); font-weight: 600; }
+
+  /* Ajustes */
+  .lr-todo { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: var(--cds-gap-md); }
+  .lr-todo li { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); align-content: start; font-size: var(--cds-font-size-caption); line-height: 1.55; }
+  .lr-todo h3 { font-size: var(--cds-font-size-body); }
+  .lr-todo p { margin: 0; }
+  .lr-todo code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.95em; overflow-wrap: anywhere; }
+  .lr-tag { justify-self: start; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--lr-a) 14%, transparent); color: var(--lr-a); }
+  .lr-tag--site { background: color-mix(in srgb, var(--lr-b) 16%, transparent); color: var(--color-fg); }
+  .lr-tag--conteudo { background: color-mix(in srgb, var(--lr-c) 18%, transparent); color: var(--color-fg); }
+
+  .lr-fail { display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: inherit; width: 100%; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .lr-fail::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--color-bad); }
+  .lr [data-dash-source-state=empty] { color: transparent; }
+  .lr [data-dash-source-state=refreshing] { opacity: 0.5; transition: opacity var(--cds-dur-slow); }
+  @media (prefers-reduced-motion: no-preference) {
+    .lr-grow { animation: lr-grow var(--cds-dur-slow) var(--cds-ease-out) both; transform-origin: left center; transform-box: fill-box; }
+    @keyframes lr-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  }
+</style>
+
+<div class="lr">
+  <header class="lr-hero" id="topo">
+    <div class="lr-hero-text">
+      <p class="lr-eyebrow">Google Analytics 4 · site novo no ar desde 19 de outubro de 2026</p>
+      <h1>Site novo do Dr. Tércio Rocha</h1>
+      <p class="lr-take">Em <b data-draw="v" data-source="resumo" data-field="dias" data-row="0">—</b> dias, <b data-draw="v" data-source="totais" data-field="totalusers" data-row="0">—</b> pessoas visitaram o site e o formulário de contato foi enviado <b data-draw="v" data-source="resumo" data-field="leads" data-row="0">—</b> vezes: <b data-draw="v" data-fmt="pct" data-source="resumo" data-field="conversao" data-row="0">—</b> das sessões viraram lead.</p>
+      <p class="lr-take">O Instagram trouxe <b data-draw="v" data-fmt="pct" data-source="origens_grupo" data-field="parte_sessoes" data-where="grupo=instagram">—</b> das visitas e <b data-draw="v" data-fmt="pct" data-source="origens_grupo" data-field="parte_leads" data-where="grupo=instagram">—</b> dos leads. E <b data-draw="v" data-fmt="pct" data-source="mobile" data-field="parte_leads" data-row="0">—</b> dos leads vieram do celular.</p>
+    </div>
+    <div class="lr-hero-ring">
+      <div class="lr-ring" id="anel-leads" data-draw="ring" data-source="resumo" data-fetchpriority="high"></div>
+      <ul class="lr-ring-legend">
+        <li><i class="lr-sw lr-sw--b"></i><span>Pelo WhatsApp</span><b data-draw="v" data-source="resumo" data-field="whatsapp" data-row="0">—</b></li>
+        <li><i class="lr-sw lr-sw--a"></i><span>Consulta ou e-book</span><b data-draw="v" data-source="resumo" data-field="formularios" data-row="0">—</b></li>
+        <li class="lr-conv"><span>Leads por sessão</span><b data-draw="v" data-fmt="pct" data-source="resumo" data-field="conversao" data-row="0">—</b></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="lr-section" id="numeros" aria-label="Números principais">
+    <div class="lr-kpis">
+      <div class="lr-kpi">
+        <span class="lr-kpi-label">Visitantes</span>
+        <span class="lr-kpi-value" data-draw="v" data-source="totais" data-field="totalusers" data-row="0" data-fetchpriority="high">—</span>
+        <div class="lr-spark" data-draw="spark" data-source="diario" data-col="active_users" data-fmt="int"></div>
+        <span class="lr-kpi-note">Pessoas diferentes, contadas por navegador</span>
+      </div>
+      <div class="lr-kpi">
+        <span class="lr-kpi-label">Sessões</span>
+        <span class="lr-kpi-value" data-draw="v" data-source="totais" data-field="sessions" data-row="0">—</span>
+        <div class="lr-spark" data-draw="spark" data-source="diario" data-col="sessions" data-fmt="int"></div>
+        <span class="lr-kpi-note">Visitas ao site, contando quem voltou</span>
+      </div>
+      <div class="lr-kpi">
+        <span class="lr-kpi-label">Páginas vistas</span>
+        <span class="lr-kpi-value" data-draw="v" data-source="totais" data-field="screen_page_views" data-row="0">—</span>
+        <div class="lr-spark" data-draw="spark" data-source="diario" data-col="screen_page_views" data-fmt="int"></div>
+        <span class="lr-kpi-note">Cada vez que uma página foi aberta</span>
+      </div>
+      <div class="lr-kpi">
+        <span class="lr-kpi-label">Engajamento</span>
+        <span class="lr-kpi-value" data-draw="v" data-fmt="pct" data-source="totais" data-field="engagement_rate" data-row="0">—</span>
+        <div class="lr-spark" data-draw="spark" data-source="diario" data-col="engaged_sessions" data-per="sessions" data-fmt="pct"></div>
+        <span class="lr-kpi-note">Sessões com mais de 10 segundos, duas páginas ou um lead</span>
+      </div>
+      <div class="lr-kpi">
+        <span class="lr-kpi-label">Tempo ativo por visitante</span>
+        <span class="lr-kpi-value" data-draw="v" data-fmt="dur" data-source="resumo" data-field="tempo_visitante" data-row="0">—</span>
+        <div class="lr-spark" data-draw="spark" data-source="diario" data-col="user_engagement_duration" data-per="active_users" data-fmt="dur"></div>
+        <span class="lr-kpi-note">Tempo com o site aberto e em primeiro plano</span>
+      </div>
+    </div>
+    <p class="lr-note">As linhas mostram cada dia completo desde o lançamento; o dia de hoje fica de fora até terminar.</p>
+  </section>
+
+  <section class="lr-section" id="dia-a-dia">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Ritmo</p>
+      <h2>Visitas e leads, dia a dia</h2>
+    </header>
+    <div class="lr-card">
+      <ul class="lr-legend">
+        <li><i class="lr-sw lr-sw--line"></i>Sessões</li>
+        <li><i class="lr-sw lr-sw--dot lr-sw--b"></i>Lead pelo WhatsApp</li>
+        <li><i class="lr-sw lr-sw--dot lr-sw--a"></i>Lead por consulta ou e-book</li>
+      </ul>
+      <div class="lr-chart" id="grafico-diario" data-draw="daily" data-source="diario"></div>
+      <p class="lr-note">Cada ponto é um lead. A linha tracejada vai até hoje, que ainda está em andamento.</p>
+    </div>
+  </section>
+
+  <section class="lr-section" id="conversao">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Conversão</p>
+      <h2>Do clique ao contato</h2>
+      <p class="lr-note">Quantas pessoas chegaram a cada etapa. Entre as etapas, a parte que ficou pelo caminho; em vermelho, a maior perda.</p>
+    </header>
+    <div class="lr-card">
+      <div class="lr-funnel">
+        <div class="lr-funnel-shape" id="grafico-funil" data-draw="funnel" data-source="funil"></div>
+        <ol class="lr-funnel-steps">
+          <li><b data-draw="v" data-source="funil" data-field="usuarios" data-where="etapa=page_view">—</b><span>visitaram o site</span><small data-draw="v" data-fmt="pct" data-source="funil" data-field="parte" data-where="etapa=page_view">—</small></li>
+          <li><b data-draw="v" data-source="funil" data-field="usuarios" data-where="etapa=user_engagement">—</b><span>interagiram com a página</span><small data-draw="v" data-fmt="pct" data-source="funil" data-field="parte" data-where="etapa=user_engagement">—</small></li>
+          <li><b data-draw="v" data-source="funil" data-field="usuarios" data-where="etapa=form_start">—</b><span>começaram um formulário</span><small data-draw="v" data-fmt="pct" data-source="funil" data-field="parte" data-where="etapa=form_start">—</small></li>
+          <li><b data-draw="v" data-source="funil" data-field="usuarios" data-where="etapa=generate_lead">—</b><span>enviaram o formulário</span><small data-draw="v" data-fmt="pct" data-source="funil" data-field="parte" data-where="etapa=generate_lead">—</small></li>
+        </ol>
+      </div>
+    </div>
+    <div class="lr-card">
+      <h3>Tudo o que o GA4 registrou</h3>
+      <p class="lr-note">Em destaque, os eventos criados para o site (<code>generate_lead</code> e <code>contato_whatsapp</code>). Os outros o GA4 registra sozinho.</p>
+      <div class="lr-events" id="eventos" data-draw="events" data-source="eventos"></div>
+    </div>
+  </section>
+
+  <section class="lr-section" id="origens">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Aquisição</p>
+      <h2>De onde vêm as visitas e os leads</h2>
+      <p class="lr-note">Compare as duas barras: uma origem cuja barra de leads é maior que a de visitas traz gente mais pronta para marcar consulta.</p>
+    </header>
+    <div class="lr-card">
+      <div class="lr-src-head" aria-hidden="true">
+        <span>Origem</span>
+        <span><i class="lr-sw lr-sw--m"></i>Parte das visitas</span>
+        <span><i class="lr-sw lr-sw--a"></i>Parte dos leads</span>
+        <span>Conversão</span>
+      </div>
+      <div class="lr-src" id="grafico-origens" data-draw="sources" data-source="origens_grupo"></div>
+      <p class="lr-note">Origens agrupadas: Instagram junta link da bio, stories e direct; WhatsApp são links abertos em conversas; Direto é quem digitou o endereço ou abriu um link sem origem identificada. Conversão é leads divididos por sessões.</p>
+    </div>
+  </section>
+
+  <section class="lr-section" id="paginas">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Conteúdo</p>
+      <h2>O que as pessoas leem</h2>
+    </header>
+    <div class="lr-new" id="paginas-novas">
+      <div class="lr-new-text">
+        <span class="lr-tag">Novo no site</span>
+        <h3>As páginas de tratamento</h3>
+        <p>A página <code>/tratamentos</code> e as páginas de cada área de tratamento não existiam no site antigo. Agora quem chega pela página inicial tem para onde seguir: escolhe a condição que interessa e lê uma página só sobre ela, com a jornada do tratamento e o caminho para marcar a consulta.</p>
+        <p>Essas páginas novas já formam a <b data-draw="v" data-fmt="ord" data-source="paginas_novas" data-field="posicao" data-row="0">—</b> seção mais vista do site e dão às pessoas mais motivos para continuar navegando: em média, cada visita abre <b data-draw="v" data-fmt="dec" data-source="resumo" data-field="paginas_por_sessao" data-row="0">—</b> páginas.</p>
+      </div>
+      <dl class="lr-new-stats">
+        <div><dt>visualizações nas páginas de tratamento</dt><dd data-draw="v" data-source="paginas_novas" data-field="visualizacoes" data-row="0">—</dd></div>
+        <div><dt>de todas as visualizações do site</dt><dd data-draw="v" data-fmt="pct" data-source="paginas_novas" data-field="parte_visualizacoes" data-row="0">—</dd></div>
+        <div><dt>leads enviados a partir delas</dt><dd data-draw="v" data-source="paginas_novas" data-field="leads" data-row="0">—</dd></div>
+        <div><dt>páginas de tratamento visitadas</dt><dd data-draw="v" data-source="paginas_novas" data-field="paginas" data-row="0">—</dd></div>
+      </dl>
+    </div>
+    <div class="lr-grid">
+      <div class="lr-card">
+        <h3>Visualizações por seção do site</h3>
+        <p class="lr-note">O tamanho de cada bloco é o número de visualizações da seção.</p>
+        <div class="lr-treemap" id="grafico-secoes" data-draw="treemap" data-source="secoes"></div>
+      </div>
+      <div class="lr-card">
+        <h3>Páginas mais vistas</h3>
+        <div class="lr-pages" id="lista-paginas">
+          <div class="lr-page lr-page-head" aria-hidden="true"><span></span><span>Página</span><span>Visualizações</span><span>Tempo médio</span><span>Leads</span></div>
+          <div data-draw="pages" data-source="paginas_site" style="display: contents"></div>
+        </div>
+        <p class="lr-note">Tempo médio por visitante. Leads contam a página em que o formulário foi enviado. Ficaram de fora <b data-draw="v" data-source="paginas_descartadas" data-field="visualizacoes" data-row="0">—</b> visualizações em endereços que não existem no site novo, de robôs procurando o WordPress antigo e de links velhos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lr-section" id="publico">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Público</p>
+      <h2>Quem visita e quando</h2>
+      <p class="lr-note">Só acessos do Brasil. Ficaram de fora <b data-draw="v" data-source="fora_brasil" data-field="sessoes" data-row="0">—</b> sessões de outros países ou sem local identificado, quase todas de servidores de nuvem (Ashburn, Prineville, Singapura e afins), que são robôs.</p>
+    </header>
+    <div class="lr-grid">
+      <div class="lr-card">
+        <h3>Sessões por estado</h3>
+        <div class="lr-tilemap" id="mapa-estados" data-draw="tilemap" data-source="estados"></div>
+      </div>
+      <div class="lr-card">
+        <h3>Cidades que mais visitam</h3>
+        <div class="lr-cities" id="lista-cidades" data-draw="cities" data-source="cidades_brasil"></div>
+      </div>
+    </div>
+    <div class="lr-grid">
+      <div class="lr-card">
+        <h3>Celular ou computador</h3>
+        <div class="lr-split" id="grafico-dispositivos" data-draw="devices" data-source="dispositivos"></div>
+      </div>
+      <div class="lr-card">
+        <h3>Horário das visitas</h3>
+        <div class="lr-clock" id="grafico-horas" data-draw="clock" data-source="horas"></div>
+        <p class="lr-note">Sessões em cada hora do dia, no fuso da propriedade do GA4. Quanto mais longa e escura a barra, mais visitas.</p>
+      </div>
+    </div>
+    <p class="lr-strip">
+      <span><b data-draw="v" data-source="recorrencia" data-field="active_users" data-where="new_vs_returning=returning">—</b> visitantes voltaram ao site</span>
+      <span><b data-draw="v" data-fmt="dur" data-source="totais" data-field="average_session_duration" data-row="0">—</b> de duração média por sessão</span>
+    </p>
+  </section>
+
+  <section class="lr-section" id="ajustes">
+    <header class="lr-sh">
+      <p class="lr-eyebrow">Próximos passos</p>
+      <h2>O que vale ajustar</h2>
+    </header>
+    <ul class="lr-todo">
+      <li>
+        <span class="lr-tag">Medição</span>
+        <h3>Separar os leads por formulário</h3>
+        <p>O site envia junto com cada lead de onde ele veio (consulta, WhatsApp ou e-book), no parâmetro <code>lead_source</code>. Para isso aparecer nos relatórios, registre <code>lead_source</code> como dimensão personalizada no GA4, em Administrador → Definições personalizadas.</p>
+      </li>
+      <li>
+        <span class="lr-tag">Divulgação</span>
+        <h3>Links com UTM em cada canal</h3>
+        <p>O tráfego direto tem o engajamento mais baixo e quase não gera leads. Boa parte são links abertos sem origem conhecida. Usar UTM na bio, nos stories, no ManyChat e nas mensagens mostra qual ação trouxe cada visita.</p>
+      </li>
+      <li>
+        <span class="lr-tag lr-tag--conteudo">Conteúdo</span>
+        <h3>Página de livros</h3>
+        <p>Quem abre <code>/livros</code> sai quase sem interagir. Vale revisar o conteúdo e dar um próximo passo claro, como o e-book ou a consulta.</p>
+      </li>
+      <li>
+        <span class="lr-tag lr-tag--site">Site</span>
+        <h3>Endereços antigos sem redirecionamento</h3>
+        <p>Houve visitas a endereços do site antigo que hoje não levam a lugar nenhum, como <code>/a-genetica-define-apenas-20-da-sua-vida-os-outros-80-dependem-de-voce</code> e <code>/elementor-163</code>. Um redirecionamento 301 evita perder essas visitas.</p>
+      </li>
+      <li>
+        <span class="lr-tag lr-tag--site">Site</span>
+        <h3>Título da página inicial</h3>
+        <p>O título da home sai com “Dr. Tércio Rocha” repetido no fim. É um ajuste pequeno no código do site.</p>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<script>
+  window.LR = (() => {
+    const nf = new Intl.NumberFormat('pt-BR');
+    const pf = new Intl.NumberFormat('pt-BR', {style: 'percent', maximumFractionDigits: 1});
+    const pf0 = new Intl.NumberFormat('pt-BR', {style: 'percent', maximumFractionDigits: 0});
+    const dur = (s) => {
+      const t = Math.round(Number(s) || 0);
+      const m = Math.floor(t / 60), r = t % 60;
+      return m ? `${m}min${String(r).padStart(2, '0')}s` : `${r}s`;
+    };
+    const df = new Intl.NumberFormat('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+    const FMT = {int: (v) => nf.format(Math.round(v)), pct: (v) => pf.format(v), pct0: (v) => pf0.format(v), dec: (v) => df.format(v), ord: (v) => `${Math.round(v)}ª`, dur};
+    const MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    const diaKey = (d) => String(d.date).slice(0, 10);
+    const dia = (s) => {
+      const [, m, d] = String(s).slice(0, 10).split('-');
+      return `${Number(d)} ${MES[Number(m) - 1]}`;
+    };
+    const hoje = () => new Date().toLocaleDateString('sv-SE');
+    const num = (v) => Number(v) || 0;
+    const porDia = (rows) => [...rows].sort((a, b) => diaKey(a).localeCompare(diaKey(b)));
+    const C = {
+      a: 'var(--cds-chart-categorical-1)',
+      b: 'var(--cds-chart-categorical-2)',
+      c: 'var(--cds-chart-categorical-3)',
+      m: 'var(--cds-chart-muted)',
+      grid: 'var(--cds-chart-grid)',
+      cat: (i) => `var(--cds-chart-categorical-${(i % 8) + 1})`,
+    };
+    const mix = (c, p, base = 'transparent') => `color-mix(in srgb, ${c} ${p}%, ${base})`;
+
+    const find = (rows, where) => {
+      const p = [...new URLSearchParams(where)];
+      return rows.find((r) => p.every(([k, v]) => String(r[k]) === v));
+    };
+
+    /* Devolve as linhas de cada fonte quando todas carregaram; senão deixa o elemento no estado certo. */
+    const ready = (el, ids) => {
+      const ds = ids.map((id) => dash.data(id));
+      const bad = ds.find((d) => d.status !== 'ok');
+      if (!bad) {
+        el.classList.remove('dash-skeleton');
+        return ds.map((d) => (Array.isArray(d.data) ? d.data : []));
+      }
+      const loading = bad.status === 'loading';
+      const kind = el.dataset.draw;
+      el.replaceChildren();
+      if (kind === 'v') el.textContent = '—';
+      el.classList.toggle('dash-skeleton', loading);
+      if (!loading && kind !== 'v') {
+        const f = document.createElement('div');
+        f.className = 'lr-fail';
+        f.textContent = 'Não foi possível carregar';
+        el.append(f);
+      }
+      return null;
+    };
+
+    const make = (tag, cls, text) => {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    };
+
+    const tipFor = (el) => {
+      const t = make('div', 'lr-tip');
+      t.hidden = true;
+      el.append(t);
+      return t;
+    };
+    const showTip = (el, t, px, py, head, lines) => {
+      t.replaceChildren(make('div', 'lr-tip-h', head));
+      lines.forEach(([color, text]) => {
+        const d = make('div');
+        if (color) {
+          const i = make('i');
+          i.style.background = color;
+          d.append(i);
+        }
+        d.append(make('span', null, text));
+        t.append(d);
+      });
+      t.hidden = false;
+      const tw = t.offsetWidth, th = t.offsetHeight;
+      t.style.left = `${Math.max(0, Math.min(el.clientWidth - tw, px - tw / 2))}px`;
+      t.style.top = `${Math.max(0, py - th - 12)}px`;
+    };
+
+    const gradient = (svg, id, color) => {
+      const g = svg.append('defs').append('linearGradient').attr('id', id).attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', 1);
+      [[0, 0.26], [0.25, 0.16], [0.5, 0.08], [0.75, 0.03], [1, 0]].forEach(([o, a]) => {
+        g.append('stop').attr('offset', o).attr('style', `stop-color: ${color}; stop-opacity: ${a}`);
+      });
+      return `url(#${id})`;
+    };
+
+    /* Barras crescem só na primeira vez que os dados chegam, não a cada redesenho. */
+    let t0 = null;
+    const grow = () => {
+      if (t0 === null) t0 = performance.now();
+      return performance.now() - t0 < 2000 ? 'lr-grow' : '';
+    };
+
+    return {nf, pf, dur, FMT, dia, diaKey, hoje, num, porDia, C, mix, find, ready, make, tipFor, showTip, gradient, grow};
+  })();
+</script>
+
+<script>
+  /* Valores calculados a partir das consultas ao GA4. */
+  dash.calc('resumo', {
+    inputs: ['totais', 'eventos', 'diario'],
+    title: 'Resumo do período',
+    description: 'Dias com dados, leads (generate_lead) separados em WhatsApp e formulário, conversão (leads ÷ sessões), tempo ativo por visitante e páginas vistas por sessão.',
+    fn: (totais, eventos, diario) => {
+      const t = totais[0] || {};
+      const ev = (n) => Number((eventos.find((e) => e.event_name === n) || {}).event_count || 0);
+      const leads = ev('generate_lead');
+      const whatsapp = ev('contato_whatsapp');
+      const sessoes = Number(t.sessions) || 0;
+      const usuarios = Number(t.active_users) || 0;
+      return [{
+        dias: diario.length,
+        leads,
+        whatsapp,
+        formularios: Math.max(0, leads - whatsapp),
+        conversao: sessoes ? leads / sessoes : 0,
+        tempo_visitante: usuarios ? Number(t.user_engagement_duration) / usuarios : 0,
+        paginas_por_sessao: sessoes ? (Number(t.screen_page_views) || 0) / sessoes : 0,
+      }];
+    },
+  });
+
+  dash.calc('mobile', {
+    inputs: ['dispositivos'],
+    title: 'Participação do celular',
+    description: 'Parte das sessões e dos leads que vieram de celular.',
+    fn: (dispositivos) => {
+      const soma = (rs, f) => rs.reduce((a, r) => a + (Number(r[f]) || 0), 0);
+      const cel = dispositivos.filter((r) => r.devicecategory === 'mobile');
+      const leads = soma(dispositivos, 'conversions_generate_lead');
+      const sessoes = soma(dispositivos, 'sessions');
+      return [{
+        parte_sessoes: sessoes ? soma(cel, 'sessions') / sessoes : 0,
+        parte_leads: leads ? soma(cel, 'conversions_generate_lead') / leads : 0,
+      }];
+    },
+  });
+
+  dash.calc('funil', {
+    inputs: ['eventos'],
+    title: 'Funil de visitantes',
+    description: 'Pessoas em cada etapa (page_view, user_engagement, form_start, generate_lead) e a parte de quem visitou.',
+    fn: (eventos) => {
+      const pessoas = (n) => Number((eventos.find((e) => e.event_name === n) || {}).totalusers || 0);
+      const base = pessoas('page_view');
+      return ['page_view', 'user_engagement', 'form_start', 'generate_lead']
+        .map((etapa) => ({etapa, usuarios: pessoas(etapa), parte: base ? pessoas(etapa) / base : 0}));
+    },
+  });
+
+  dash.calc('origens_grupo', {
+    inputs: ['origens'],
+    title: 'Origens agrupadas',
+    description: 'Origem / mídia agrupada em Instagram, Google, ManyChat, WhatsApp, Facebook, IA, Google Ads, Direto e Outros, com sessões, leads, a parte de cada grupo no total e a conversão (leads ÷ sessões).',
+    fn: (origens) => {
+      const grupos = [
+        ['instagram', 'Instagram', (s) => /instagram|^ig\s*\//.test(s)],
+        ['manychat', 'ManyChat', (s) => /manychat/.test(s)],
+        ['whatsapp', 'WhatsApp', (s) => /wl\.co|wa\.me|whatsapp/.test(s)],
+        ['facebook', 'Facebook', (s) => /facebook|^fb\s*\//.test(s)],
+        ['ia', 'Assistentes de IA', (s, c) => c === 'AI Assistant'],
+        ['anuncios', 'Google Ads', (s) => /google\s*\/\s*(cpc|ppc|paid)/.test(s)],
+        ['google', 'Google', (s) => /google|bing|yahoo|duckduckgo/.test(s)],
+        ['direto', 'Direto', (s) => /\(direct\)/.test(s)],
+        ['outros', 'Outros sites', () => true],
+      ];
+      const total = {sessoes: 0, leads: 0};
+      const acc = new Map(grupos.map(([id, nome]) => [id, {grupo: id, nome, sessoes: 0, engajadas: 0, leads: 0, whatsapp: 0}]));
+      origens.forEach((r) => {
+        const s = String(r.session_source_medium).toLowerCase();
+        const [id] = grupos.find(([, , teste]) => teste(s, r.session_default_channel_group));
+        const g = acc.get(id);
+        g.sessoes += Number(r.sessions) || 0;
+        g.engajadas += Number(r.engaged_sessions) || 0;
+        g.leads += Number(r.conversions_generate_lead) || 0;
+        g.whatsapp += Number(r.conversions_contato_whatsapp) || 0;
+        total.sessoes += Number(r.sessions) || 0;
+        total.leads += Number(r.conversions_generate_lead) || 0;
+      });
+      return [...acc.values()].map((g) => ({
+        ...g,
+        parte_sessoes: total.sessoes ? g.sessoes / total.sessoes : 0,
+        parte_leads: total.leads ? g.leads / total.leads : 0,
+        conversao: g.sessoes ? g.leads / g.sessoes : 0,
+      }));
+    },
+  });
+
+  dash.calc('paginas_site', {
+    inputs: ['paginas'],
+    title: 'Páginas do site novo',
+    description: 'Páginas que existem no site novo (início, consulta, tratamentos, artigos, e-book, sobre, livros), somando as linhas de cada endereço, com nome, seção e tempo médio por visitante. Endereços de robôs e links antigos ficam de fora.',
+    fn: (paginas) => {
+      const secoes = [['/', 'inicio'], ['/consulta', 'consulta'], ['/tratamentos', 'tratamentos'], ['/artigos', 'artigos'], ['/ebook-longevidade', 'ebook'], ['/dr-tercio-rocha', 'sobre'], ['/livros', 'livros']];
+      const secaoDe = (p) => {
+        if (p === '/') return 'inicio';
+        const s = secoes.find(([raiz]) => raiz !== '/' && (p === raiz || p.startsWith(raiz + '/')));
+        return s ? s[1] : null;
+      };
+      const acc = new Map();
+      paginas.forEach((r) => {
+        const p = String(r.page_path);
+        const secao = secaoDe(p);
+        if (!secao) return;
+        const g = acc.get(p) || {page_path: p, secao, nome: '', topo: -1, visualizacoes: 0, visitantes: 0, tempo: 0, leads: 0};
+        const v = Number(r.screen_page_views) || 0;
+        if (v > g.topo) { g.topo = v; g.nome = p === '/' ? 'Página inicial' : String(r.pagetitle || p).replace(/(\s*\|\s*Dr\. Tércio Rocha)+$/, ''); }
+        g.visualizacoes += v;
+        g.visitantes += Number(r.active_users) || 0;
+        g.tempo += Number(r.user_engagement_duration) || 0;
+        g.leads += Number(r.conversions_generate_lead) || 0;
+        acc.set(p, g);
+      });
+      return [...acc.values()].map(({topo, tempo, ...g}) => ({...g, tempo_medio: g.visitantes ? tempo / g.visitantes : 0}));
+    },
+  });
+
+  dash.calc('paginas_descartadas', {
+    inputs: ['paginas'],
+    title: 'Endereços fora do site novo',
+    description: 'Visualizações em endereços que não pertencem a nenhuma seção do site novo (robôs procurando o WordPress antigo e links antigos).',
+    fn: (paginas) => {
+      const raizes = ['/consulta', '/tratamentos', '/artigos', '/ebook-longevidade', '/dr-tercio-rocha', '/livros'];
+      const valida = (p) => p === '/' || raizes.some((r) => p === r || p.startsWith(r + '/'));
+      const fora = paginas.filter((r) => !valida(String(r.page_path)));
+      return [{
+        visualizacoes: fora.reduce((a, r) => a + (Number(r.screen_page_views) || 0), 0),
+        enderecos: new Set(fora.map((r) => r.page_path)).size,
+      }];
+    },
+  });
+
+  dash.calc('secoes', {
+    inputs: ['paginas_site'],
+    title: 'Visualizações por seção',
+    description: 'Soma das páginas do site novo por seção: visualizações, leads e quantas páginas.',
+    fn: (paginas_site) => {
+      const nomes = {inicio: 'Página inicial', consulta: 'Agendar consulta', tratamentos: 'Tratamentos', artigos: 'Artigos', ebook: 'E-book', sobre: 'Sobre o Dr. Tércio', livros: 'Livros'};
+      const acc = new Map();
+      paginas_site.forEach((p) => {
+        const g = acc.get(p.secao) || {secao: p.secao, nome: nomes[p.secao] || p.secao, visualizacoes: 0, leads: 0, paginas: 0};
+        g.visualizacoes += p.visualizacoes;
+        g.leads += p.leads;
+        g.paginas += 1;
+        acc.set(p.secao, g);
+      });
+      return [...acc.values()];
+    },
+  });
+
+  dash.calc('paginas_novas', {
+    inputs: ['paginas_site'],
+    title: 'Páginas de tratamento (novas)',
+    description: 'A página /tratamentos e as páginas de cada área, que não existiam no site antigo: visualizações, parte do total do site, leads, quantas páginas tiveram visita e a posição da seção entre as mais vistas.',
+    fn: (paginas_site) => {
+      const porSecao = new Map();
+      paginas_site.forEach((p) => porSecao.set(p.secao, (porSecao.get(p.secao) || 0) + p.visualizacoes));
+      const novas = paginas_site.filter((p) => p.secao === 'tratamentos');
+      const total = paginas_site.reduce((a, p) => a + p.visualizacoes, 0);
+      const visualizacoes = novas.reduce((a, p) => a + p.visualizacoes, 0);
+      const ordem = [...porSecao.entries()].sort((a, b) => b[1] - a[1]).map(([s]) => s);
+      return [{
+        visualizacoes,
+        parte_visualizacoes: total ? visualizacoes / total : 0,
+        leads: novas.reduce((a, p) => a + p.leads, 0),
+        paginas: novas.length,
+        posicao: ordem.indexOf('tratamentos') + 1,
+      }];
+    },
+  });
+
+  dash.calc('cidades_brasil', {
+    inputs: ['cidades'],
+    title: 'Cidades do Brasil',
+    description: 'Só linhas com país Brasil, com a sigla do estado. Acessos de outros países (na maioria servidores de nuvem, ou seja, robôs) ficam de fora.',
+    fn: (cidades) => {
+      const UF = {Acre: 'AC', Alagoas: 'AL', Amapa: 'AP', Amazonas: 'AM', Bahia: 'BA', Ceara: 'CE', 'Federal District': 'DF', 'Espirito Santo': 'ES', Goias: 'GO', Maranhao: 'MA', 'Mato Grosso': 'MT', 'Mato Grosso do Sul': 'MS', 'Minas Gerais': 'MG', Para: 'PA', Paraiba: 'PB', Parana: 'PR', Pernambuco: 'PE', Piaui: 'PI', 'Rio de Janeiro': 'RJ', 'Rio Grande do Norte': 'RN', 'Rio Grande do Sul': 'RS', Rondonia: 'RO', Roraima: 'RR', 'Santa Catarina': 'SC', 'Sao Paulo': 'SP', Sergipe: 'SE', Tocantins: 'TO'};
+      return cidades
+        .filter((r) => r.country === 'Brazil')
+        .map((r) => ({
+          region: r.region,
+          city: r.city,
+          uf: UF[String(r.region).replace(/^State of /, '')] || '',
+          sessoes: Number(r.sessions) || 0,
+          visitantes: Number(r.active_users) || 0,
+        }));
+    },
+  });
+
+  dash.calc('estados', {
+    inputs: ['cidades_brasil'],
+    title: 'Sessões por estado',
+    description: 'Cidades do Brasil somadas por estado.',
+    fn: (cidades_brasil) => {
+      const acc = new Map();
+      cidades_brasil.filter((c) => c.uf).forEach((c) => {
+        const g = acc.get(c.uf) || {uf: c.uf, sessoes: 0, visitantes: 0, cidades: 0};
+        g.sessoes += c.sessoes;
+        g.visitantes += c.visitantes;
+        g.cidades += c.city === '(not set)' ? 0 : 1;
+        acc.set(c.uf, g);
+      });
+      return [...acc.values()];
+    },
+  });
+
+  dash.calc('fora_brasil', {
+    inputs: ['cidades'],
+    title: 'Acessos de fora do Brasil',
+    description: 'Sessões e visitantes com país diferente de Brasil ou não identificado.',
+    fn: (cidades) => {
+      const fora = cidades.filter((r) => r.country !== 'Brazil');
+      return [{
+        sessoes: fora.reduce((a, r) => a + (Number(r.sessions) || 0), 0),
+        visitantes: fora.reduce((a, r) => a + (Number(r.active_users) || 0), 0),
+      }];
+    },
+  });
+</script>
+
+<script>
+  const {C, mix, num, make} = LR;
+
+  dash.draw('v', (el) => {
+    const r = LR.ready(el, [el.dataset.source]);
+    if (!r) return;
+    const rows = r[0];
+    const row = el.dataset.where ? LR.find(rows, el.dataset.where) : rows[Number(el.dataset.row || 0)];
+    const v = row ? Number(row[el.dataset.field]) : NaN;
+    el.textContent = Number.isFinite(v) ? LR.FMT[el.dataset.fmt || 'int'](v) : '—';
+  });
+
+  /* Anel dos leads: WhatsApp e formulário. */
+  dash.draw('ring', (el) => {
+    const r = LR.ready(el, ['resumo']);
+    if (!r) return;
+    const d = r[0][0] || {};
+    el.replaceChildren();
+    const S = 200, R = S / 2, w = 20;
+    const parts = [
+      {nome: 'Pelo WhatsApp', v: num(d.whatsapp), cor: C.b},
+      {nome: 'Consulta ou e-book', v: num(d.formularios), cor: C.a},
+    ];
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${S} ${S}`).attr('role', 'img').attr('aria-label', 'Leads por tipo');
+    const g = svg.append('g').attr('transform', `translate(${R},${R})`);
+    g.append('circle').attr('r', R - w / 2 - 1).attr('fill', 'none').attr('stroke', C.grid).attr('stroke-width', w);
+    const total = d3.sum(parts, (p) => p.v);
+    if (total > 0) {
+      const arc = d3.arc().innerRadius(R - w - 1).outerRadius(R - 1).cornerRadius(4);
+      const tip = LR.tipFor(el);
+      g.selectAll('path').data(d3.pie().value((p) => p.v).sort(null).padAngle(0.035)(parts)).join('path')
+        .attr('d', arc).attr('fill', (p) => p.data.cor)
+        .on('pointerenter pointermove', (ev, p) => {
+          const k = el.clientWidth / S;
+          const [x, y] = arc.centroid(p);
+          LR.showTip(el, tip, (x + R) * k, (y + R) * k, p.data.nome, [[null, `${LR.nf.format(p.data.v)} leads (${LR.FMT.pct(p.data.v / total)})`]]);
+        })
+        .on('pointerleave', () => { tip.hidden = true; });
+    }
+    g.append('text').attr('class', 'lr-ring-num').attr('text-anchor', 'middle').attr('dy', '0.2em').text(LR.nf.format(num(d.leads)));
+    g.append('text').attr('class', 'lr-ring-cap').attr('text-anchor', 'middle').attr('dy', '2.2em').text('leads');
+  });
+
+  /* Linhas pequenas dos números: cada dia completo. */
+  dash.draw('spark', (el) => {
+    const r = LR.ready(el, ['diario']);
+    if (!r) return;
+    const hoje = LR.hoje();
+    const rows = LR.porDia(r[0]).filter((d) => LR.diaKey(d) !== hoje);
+    const col = el.dataset.col, per = el.dataset.per, fmt = LR.FMT[el.dataset.fmt || 'int'];
+    const vals = rows.map((d) => (per ? (num(d[per]) ? num(d[col]) / num(d[per]) : 0) : num(d[col])));
+    el.replaceChildren();
+    if (vals.length < 2) return;
+    const W = Math.max(120, el.clientWidth || 180), H = 40;
+    const x = d3.scaleLinear([0, vals.length - 1], [4, W - 4]);
+    const y = d3.scaleLinear([0, d3.max(vals) || 1], [H - 3, 5]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Evolução diária');
+    const fill = LR.gradient(svg, `lr-sp-${col}-${per || 'n'}`, C.a);
+    svg.append('path').attr('d', d3.area().x((v, i) => x(i)).y0(H).y1((v) => y(v))(vals)).attr('fill', fill);
+    svg.append('path').attr('d', d3.line().x((v, i) => x(i)).y((v) => y(v))(vals)).attr('fill', 'none').attr('stroke', C.a).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    const last = vals.length - 1;
+    svg.append('circle').attr('cx', x(last)).attr('cy', y(vals[last])).attr('r', 3).attr('fill', C.a);
+    const dot = svg.append('circle').attr('r', 3.5).attr('fill', 'var(--color-panel)').attr('stroke', C.a).attr('stroke-width', 2).attr('opacity', 0);
+    const tip = LR.tipFor(el);
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const k = el.clientWidth / W;
+        const i = Math.max(0, Math.min(last, Math.round(x.invert(d3.pointer(ev)[0]))));
+        dot.attr('cx', x(i)).attr('cy', y(vals[i])).attr('opacity', 1);
+        LR.showTip(el, tip, x(i) * k, y(vals[i]) * k, LR.dia(rows[i].date), [[null, fmt(vals[i])]]);
+      })
+      .on('pointerleave', () => { tip.hidden = true; dot.attr('opacity', 0); });
+  });
+
+  /* Sessões por dia (linha) e cada lead como um ponto embaixo. */
+  dash.draw('daily', (el) => {
+    const r = LR.ready(el, ['diario']);
+    if (!r) return;
+    const rows = LR.porDia(r[0]);
+    el.replaceChildren();
+    if (!rows.length) return;
+    const hoje = LR.hoje();
+    const W = Math.max(280, el.clientWidth || 640);
+    const topH = 190;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', 'Sessões e leads por dia');
+    const maxS = d3.max(rows, (d) => num(d.sessions)) || 1;
+    const y = d3.scaleLinear([0, maxS], [topH, 22]).nice();
+    const ticks = y.ticks(4).filter(Number.isInteger);
+    const gridG = svg.append('g');
+    const tickText = svg.append('g').selectAll('text').data(ticks).join('text')
+      .attr('class', 'lr-tick').attr('text-anchor', 'end').attr('dy', '0.32em').attr('y', (d) => y(d)).text((d) => LR.nf.format(d));
+    let ml = 0;
+    tickText.each(function () { ml = Math.max(ml, this.getComputedTextLength()); });
+    ml = Math.max(ml, 28);
+    ml = Math.ceil(ml) + 12;
+    tickText.attr('x', ml - 8);
+    const x = d3.scaleBand(rows.map(LR.diaKey), [ml, W - 6]).paddingInner(0.2).paddingOuter(0.15);
+    const cx = (d) => x(LR.diaKey(d)) + x.bandwidth() / 2;
+    gridG.selectAll('line').data(ticks).join('line')
+      .attr('x1', ml).attr('x2', W - 6).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : C.grid));
+
+    const leadsMax = Math.max(3, d3.max(rows, (d) => Math.max(num(d.conversions_generate_lead), num(d.conversions_contato_whatsapp))) || 0);
+    const step = Math.max(6, Math.min(12, x.bandwidth() * 0.6));
+    const stripTop = topH + 26;
+    const stripBottom = stripTop + leadsMax * step + 2;
+    const H = stripBottom + 24;
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+    const fill = LR.gradient(svg, 'lr-grad-daily', C.a);
+    const full = rows.filter((d) => LR.diaKey(d) !== hoje);
+    const line = d3.line().x(cx).y((d) => y(num(d.sessions)));
+    svg.append('path').attr('d', d3.area().x(cx).y0(y(0)).y1((d) => y(num(d.sessions)))(rows)).attr('fill', fill);
+    if (full.length > 1) {
+      svg.append('path').attr('d', line(full)).attr('fill', 'none').attr('stroke', C.a).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    }
+    if (full.length && full.length < rows.length) {
+      svg.append('path').attr('d', line([full[full.length - 1], rows[rows.length - 1]])).attr('fill', 'none').attr('stroke', C.a).attr('stroke-width', 2).attr('stroke-dasharray', '4 4');
+    }
+    svg.append('g').selectAll('circle').data(rows).join('circle')
+      .attr('cx', cx).attr('cy', (d) => y(num(d.sessions))).attr('r', 3.5)
+      .attr('fill', 'var(--color-panel)').attr('stroke', C.a).attr('stroke-width', 2);
+    const peak = d3.greatest(full.length ? full : rows, (d) => num(d.sessions));
+    if (peak) {
+      svg.append('text').attr('class', 'lr-peak').attr('text-anchor', 'middle')
+        .attr('x', Math.max(ml + 34, Math.min(W - 40, cx(peak)))).attr('y', y(num(peak.sessions)) - 11).text(`${LR.nf.format(num(peak.sessions))} sessões`);
+    }
+
+    svg.append('line').attr('x1', ml).attr('x2', W - 6).attr('y1', stripBottom + 0.5).attr('y2', stripBottom + 0.5).attr('stroke', 'var(--cds-chart-axis)');
+    svg.append('text').attr('class', 'lr-tick').attr('x', ml - 8).attr('y', stripBottom - step / 2 - 1).attr('dy', '0.32em').attr('text-anchor', 'end').text('leads');
+    const dots = svg.append('g');
+    rows.forEach((d) => {
+      const wpp = num(d.conversions_contato_whatsapp);
+      const tot = Math.max(num(d.conversions_generate_lead), wpp);
+      for (let i = 0; i < tot; i += 1) {
+        dots.append('circle').attr('cx', cx(d)).attr('cy', stripBottom - step / 2 - 1 - i * step).attr('r', step / 2 - 1)
+          .attr('fill', i < wpp ? C.b : C.a);
+      }
+    });
+
+    const every = Math.max(1, Math.ceil(46 / x.step()));
+    svg.append('g').selectAll('text').data(rows.filter((d, i) => i % every === 0)).join('text')
+      .attr('class', 'lr-tick').attr('text-anchor', 'middle').attr('x', cx).attr('y', H - 4)
+      .text((d) => (LR.diaKey(d) === hoje ? 'hoje' : LR.dia(d.date)));
+
+    const tip = LR.tipFor(el);
+    const rule = svg.append('line').attr('y1', 14).attr('y2', stripBottom).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3').attr('opacity', 0);
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', (d) => x(LR.diaKey(d)) - (x.step() - x.bandwidth()) / 2).attr('width', x.step())
+      .attr('y', 0).attr('height', stripBottom).attr('fill', 'transparent')
+      .on('pointerenter pointermove', (ev, d) => {
+        const k = el.clientWidth / W;
+        const wpp = num(d.conversions_contato_whatsapp);
+        const form = Math.max(0, num(d.conversions_generate_lead) - wpp);
+        rule.attr('x1', cx(d)).attr('x2', cx(d)).attr('opacity', 1);
+        LR.showTip(el, tip, cx(d) * k, y(num(d.sessions)) * k, `${LR.dia(d.date)}${LR.diaKey(d) === hoje ? ' (hoje, parcial)' : ''}`, [
+          [C.a, `Sessões: ${LR.nf.format(num(d.sessions))}`],
+          [C.b, `Leads pelo WhatsApp: ${LR.nf.format(wpp)}`],
+          [C.a, `Leads por consulta ou e-book: ${LR.nf.format(form)}`],
+        ]);
+      })
+      .on('pointerleave', () => { tip.hidden = true; rule.attr('opacity', 0); });
+  });
+
+  /* Funil afunilando da esquerda para a direita, com a perda entre as etapas. */
+  dash.draw('funnel', (el) => {
+    const r = LR.ready(el, ['funil']);
+    if (!r) return;
+    const rows = r[0];
+    el.replaceChildren();
+    if (!rows.length) return;
+    const W = Math.max(260, el.clientWidth || 600), H = 120, n = rows.length, col = W / n, bw = col * 0.52;
+    const h = (d) => Math.max(8, (H - 8) * num(d.parte));
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H + 22}`).attr('role', 'img').attr('aria-label', 'Funil de visitantes');
+    const quedas = rows.slice(0, -1).map((d, i) => (num(d.usuarios) ? 1 - num(rows[i + 1].usuarios) / num(d.usuarios) : 0));
+    const pior = quedas.indexOf(Math.max(...quedas));
+    rows.forEach((d, i) => {
+      const x0 = col * i + (col - bw) / 2;
+      const hi = h(d);
+      if (i < n - 1) {
+        const x1 = col * (i + 1) + (col - bw) / 2;
+        const h2 = h(rows[i + 1]);
+        svg.append('polygon')
+          .attr('points', [[x0 + bw, (H - hi) / 2], [x1, (H - h2) / 2], [x1, (H + h2) / 2], [x0 + bw, (H + hi) / 2]].map((p) => p.join(',')).join(' '))
+          .attr('fill', mix(C.a, 16));
+        svg.append('text').attr('class', `lr-drop${i === pior ? ' lr-drop--worst' : ''}`).attr('text-anchor', 'middle').attr('dy', '0.32em')
+          .attr('x', (x0 + bw + x1) / 2).attr('y', H + 12).text(`−${LR.FMT.pct0(quedas[i])}`);
+      }
+      svg.append('rect').attr('class', LR.grow()).attr('x', x0).attr('y', (H - hi) / 2).attr('width', bw).attr('height', hi).attr('rx', 6)
+        .attr('fill', C.a).attr('opacity', 1 - i * 0.12);
+    });
+  });
+
+  const EVENTOS = {
+    page_view: 'Página visualizada',
+    session_start: 'Início de sessão',
+    first_visit: 'Primeira visita ao site',
+    user_engagement: 'Interação com a página',
+    scroll: 'Rolou até o fim da página',
+    form_start: 'Começou um formulário',
+    generate_lead: 'Enviou o formulário (lead)',
+    contato_whatsapp: 'Seguiu para o WhatsApp',
+    click: 'Clique em link para outro site',
+    view_search_results: 'Busca no site',
+    file_download: 'Baixou um arquivo',
+    video_start: 'Começou um vídeo',
+    video_progress: 'Assistiu parte de um vídeo',
+    video_complete: 'Terminou um vídeo',
+  };
+  const PROPRIOS = new Set(['generate_lead', 'contato_whatsapp']);
+
+  dash.draw('events', (el) => {
+    const r = LR.ready(el, ['eventos']);
+    if (!r) return;
+    const rows = [...r[0]].sort((a, b) => (PROPRIOS.has(b.event_name) - PROPRIOS.has(a.event_name)) || num(b.event_count) - num(a.event_count));
+    el.replaceChildren(...rows.map((d) => {
+      const t = make('div', `lr-ev${PROPRIOS.has(d.event_name) ? ' lr-ev--own' : ''}`);
+      t.append(
+        make('b', null, LR.FMT.int(num(d.event_count))),
+        make('span', null, EVENTOS[d.event_name] || d.event_name),
+        make('code', null, `${d.event_name} · ${LR.FMT.int(num(d.totalusers))} pessoas`),
+      );
+      return t;
+    }));
+  });
+
+  const DESCRICAO_ORIGEM = {
+    instagram: 'Bio, stories e direct',
+    google: 'Busca orgânica',
+    manychat: 'Automação de mensagens',
+    whatsapp: 'Links abertos em conversas',
+    facebook: 'Perfil e páginas',
+    ia: 'ChatGPT, Gemini e outros',
+    anuncios: 'Anúncios pagos',
+    direto: 'Sem origem identificada',
+    outros: 'Demais sites',
+  };
+
+  dash.draw('sources', (el) => {
+    const r = LR.ready(el, ['origens_grupo']);
+    if (!r) return;
+    const rows = r[0].filter((g) => num(g.sessoes) > 0)
+      .sort((a, b) => num(b.leads) - num(a.leads) || num(b.sessoes) - num(a.sessoes));
+    const max = d3.max(rows, (g) => Math.max(num(g.parte_sessoes), num(g.parte_leads))) || 1;
+    const bar = (label, v, cor) => {
+      const box = make('div', 'lr-src-bar');
+      box.dataset.label = label;
+      const track = make('div');
+      const i = make('i', LR.grow());
+      i.style.width = `${(v / max) * 100}%`;
+      i.style.background = cor;
+      track.append(i);
+      box.append(track, make('span', null, LR.FMT.pct0(v)));
+      return box;
+    };
+    el.replaceChildren(...rows.map((g) => {
+      const row = make('div', 'lr-src-row');
+      const name = make('div', 'lr-src-name');
+      name.append(
+        make('b', null, g.nome),
+        make('small', null, `${DESCRICAO_ORIGEM[g.grupo] || ''} · ${LR.nf.format(num(g.sessoes))} sessões · ${LR.nf.format(num(g.leads))} leads`),
+      );
+      row.append(
+        name,
+        bar('Visitas', num(g.parte_sessoes), C.m),
+        bar('Leads', num(g.parte_leads), C.a),
+        make('span', `lr-src-conv${num(g.leads) ? '' : ' lr-src-conv--zero'}`, LR.FMT.pct(num(g.conversao))),
+      );
+      return row;
+    }));
+  });
+
+  /* Seções que não existiam no site antigo. */
+  const SECOES_NOVAS = new Set(['tratamentos']);
+
+  /* Blocos proporcionais às visualizações de cada seção. */
+  dash.draw('treemap', (el) => {
+    const r = LR.ready(el, ['secoes']);
+    if (!r) return;
+    const rows = r[0].filter((s) => num(s.visualizacoes) > 0);
+    el.replaceChildren();
+    if (!rows.length) return;
+    const W = Math.max(240, el.clientWidth || 480), H = 300;
+    el.style.height = `${H}px`;
+    const root = d3.hierarchy({children: rows}).sum((d) => num(d.visualizacoes)).sort((a, b) => b.value - a.value);
+    d3.treemap().size([W, H]).paddingInner(4).round(true)(root);
+    const total = root.value || 1;
+    const tip = LR.tipFor(el);
+    root.leaves().forEach((leaf, i) => {
+      const d = leaf.data;
+      const cor = C.cat(i);
+      const t = make('div', 'lr-tile');
+      Object.assign(t.style, {
+        left: `${leaf.x0}px`, top: `${leaf.y0}px`, width: `${leaf.x1 - leaf.x0}px`, height: `${leaf.y1 - leaf.y0}px`,
+        background: mix(cor, 22, 'var(--color-panel)'), borderColor: mix(cor, 45, 'transparent'),
+      });
+      const w = leaf.x1 - leaf.x0, h = leaf.y1 - leaf.y0;
+      const linhas = Math.ceil((String(d.nome).length * 7) / Math.max(1, w - 22));
+      let usado = 18 + linhas * 16;
+      const cabe = (alt) => { if (w > 64 && usado + alt <= h) { usado += alt; return true; } return false; };
+      if (linhas <= 2 && usado <= h && w > 64) {
+        t.append(make('strong', null, d.nome));
+        if (cabe(30)) t.append(make('b', null, LR.nf.format(num(d.visualizacoes))));
+        if (SECOES_NOVAS.has(d.secao) && cabe(18)) t.append(make('em', 'lr-new-chip', 'nova'));
+        if (w > 120 && cabe(16)) t.append(make('small', null, `${LR.FMT.pct0(num(d.visualizacoes) / total)} · ${LR.nf.format(num(d.leads))} leads`));
+      }
+      t.addEventListener('pointerenter', () => {
+        LR.showTip(el, tip, (leaf.x0 + leaf.x1) / 2, leaf.y0 + 12, d.nome, [
+          [cor, `${LR.nf.format(num(d.visualizacoes))} visualizações (${LR.FMT.pct(num(d.visualizacoes) / total)})`],
+          [null, `${LR.nf.format(num(d.leads))} leads · ${LR.nf.format(num(d.paginas))} páginas`],
+        ]);
+      });
+      t.addEventListener('pointerleave', () => { tip.hidden = true; });
+      el.append(t);
+    });
+    el.append(tip);
+  });
+
+  dash.draw('pages', (el) => {
+    const r = LR.ready(el, ['paginas_site']);
+    if (!r) return;
+    const rows = [...r[0]].sort((a, b) => num(b.visualizacoes) - num(a.visualizacoes));
+    const max = d3.max(rows, (d) => num(d.visualizacoes)) || 1;
+    el.replaceChildren(...rows.map((d, i) => {
+      const row = make('div', 'lr-page');
+      row.dataset.key = d.page_path;
+      const name = make('div', 'lr-page-name');
+      const titulo = make('strong', null, d.nome);
+      if (SECOES_NOVAS.has(d.secao)) titulo.append(make('span', 'lr-new-chip', 'nova'));
+      name.append(titulo, make('code', null, d.page_path));
+      const bar = make('div', 'lr-page-bar');
+      const b = make('i', LR.grow());
+      b.style.width = `${Math.max(3, (num(d.visualizacoes) / max) * 100)}%`;
+      const track = make('div');
+      track.append(b);
+      bar.append(track, make('span', null, LR.nf.format(num(d.visualizacoes))));
+      row.append(
+        make('span', 'lr-page-rank', String(i + 1)),
+        name,
+        bar,
+        make('span', 'lr-page-time', LR.dur(d.tempo_medio)),
+        make('span', `lr-chip${num(d.leads) ? '' : ' lr-chip--zero'}`, num(d.leads) ? `${LR.nf.format(num(d.leads))} leads` : '—'),
+      );
+      return row;
+    }));
+  });
+
+  /* Mapa do Brasil em blocos: cada estado na sua posição aproximada. */
+  const POS_UF = {
+    RR: [2, 0], AP: [4, 0],
+    AM: [1, 1], PA: [3, 1], MA: [4, 1], CE: [5, 1], RN: [6, 1],
+    AC: [0, 2], RO: [1, 2], MT: [2, 2], TO: [3, 2], PI: [4, 2], PE: [5, 2], PB: [6, 2],
+    MS: [2, 3], GO: [3, 3], DF: [4, 3], BA: [5, 3], AL: [6, 3],
+    SP: [3, 4], MG: [4, 4], ES: [5, 4], SE: [6, 4],
+    PR: [3, 5], RJ: [4, 5],
+    SC: [3, 6],
+    RS: [3, 7],
+  };
+  const NOME_UF = {AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins'};
+
+  dash.draw('tilemap', (el) => {
+    const r = LR.ready(el, ['estados']);
+    if (!r) return;
+    const por = new Map(r[0].map((e) => [e.uf, e]));
+    el.replaceChildren();
+    const avail = Math.max(240, el.clientWidth || 360);
+    const gap = 4, cell = Math.max(28, Math.min(46, Math.floor((avail - gap * 6) / 7)));
+    const W = cell * 7 + gap * 6, H = cell * 8 + gap * 7;
+    const max = d3.max(r[0], (e) => num(e.sessoes)) || 1;
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Sessões por estado');
+    const tip = LR.tipFor(el);
+    const off = () => (el.clientWidth - W) / 2;
+    Object.entries(POS_UF).forEach(([uf, [c, l]]) => {
+      const e = por.get(uf);
+      const v = e ? num(e.sessoes) : 0;
+      const p = v ? 18 + 82 * Math.sqrt(v / max) : 0;
+      const x = c * (cell + gap), y = l * (cell + gap);
+      const g = svg.append('g').attr('transform', `translate(${x},${y})`);
+      g.append('rect').attr('width', cell).attr('height', cell).attr('rx', 6)
+        .attr('style', `fill: ${v ? mix(C.a, p, 'var(--color-panel)') : mix('var(--color-fg)', 5, 'var(--color-panel)')}`);
+      const escuro = p > 55;
+      g.append('text').attr('class', 'lr-uf').attr('x', cell / 2).attr('y', v ? cell / 2 - 4 : cell / 2).attr('dy', '0.32em').attr('text-anchor', 'middle')
+        .attr('style', `fill: ${escuro ? 'var(--color-bg)' : (v ? 'var(--color-fg)' : 'var(--color-fg-muted)')}`).text(uf);
+      if (v) {
+        g.append('text').attr('class', 'lr-ufn').attr('x', cell / 2).attr('y', cell / 2 + 9).attr('dy', '0.32em').attr('text-anchor', 'middle')
+          .attr('style', `fill: ${escuro ? 'var(--color-bg)' : 'var(--color-fg-muted)'}`).text(LR.nf.format(v));
+      }
+      g.on('pointerenter', () => {
+        LR.showTip(el, tip, off() + x + cell / 2, y, NOME_UF[uf], e
+          ? [[null, `${LR.nf.format(v)} sessões · ${LR.nf.format(num(e.visitantes))} visitantes`]]
+          : [[null, 'Nenhuma visita ainda']]);
+      }).on('pointerleave', () => { tip.hidden = true; });
+    });
+  });
+
+  const ACENTOS = {'Sao Paulo': 'São Paulo', Brasilia: 'Brasília', Florianopolis: 'Florianópolis', Goiania: 'Goiânia', 'Joao Pessoa': 'João Pessoa', Cuiaba: 'Cuiabá', Itajai: 'Itajaí', 'Sao Bernardo do Campo': 'São Bernardo do Campo', 'Santo Andre': 'Santo André', Ibirite: 'Ibirité', 'Nova Iguacu': 'Nova Iguaçu', Tucurui: 'Tucuruí', Jundiai: 'Jundiaí', Maringa: 'Maringá', Uberlandia: 'Uberlândia', Niteroi: 'Niterói', 'Ribeirao Preto': 'Ribeirão Preto', 'Sao Jose': 'São José', 'Sao Vicente': 'São Vicente', Anapolis: 'Anápolis', Concordia: 'Concórdia', Corumba: 'Corumbá', 'Foz do Iguacu': 'Foz do Iguaçu', Garca: 'Garça', Ibiuna: 'Ibiúna', Ijui: 'Ijuí', Jau: 'Jaú', 'Joao Monlevade': 'João Monlevade', Mairipora: 'Mairiporã', Muriae: 'Muriaé', Nilopolis: 'Nilópolis', 'Nova Venecia': 'Nova Venécia', Petropolis: 'Petrópolis', 'Ribeirao das Neves': 'Ribeirão das Neves', 'Santana de Parnaiba': 'Santana de Parnaíba', 'Vitoria da Conquista': 'Vitória da Conquista', 'Balneario Camboriu': 'Balneário Camboriú', 'Sao Luis': 'São Luís', Belem: 'Belém', Maceio: 'Maceió', Vitoria: 'Vitória', Macapa: 'Macapá', Teresina: 'Teresina'};
+
+  dash.draw('cities', (el) => {
+    const r = LR.ready(el, ['cidades_brasil']);
+    if (!r) return;
+    const rows = r[0].filter((c) => c.city !== '(not set)')
+      .sort((a, b) => num(b.sessoes) - num(a.sessoes) || num(b.visitantes) - num(a.visitantes)).slice(0, 10);
+    const max = d3.max(rows, (c) => num(c.sessoes)) || 1;
+    el.replaceChildren(...rows.map((c, i) => {
+      const row = make('div', 'lr-city');
+      row.dataset.key = `${encodeURIComponent(c.region)},${encodeURIComponent(c.city)}`;
+      const name = make('div', 'lr-city-name');
+      name.append(make('span', null, ACENTOS[c.city] || c.city), make('small', null, `${c.uf} · ${LR.nf.format(num(c.visitantes))} visitantes`));
+      const bar = make('div', 'lr-city-bar');
+      const b = make('i', LR.grow());
+      b.style.width = `${Math.max(3, (num(c.sessoes) / max) * 100)}%`;
+      b.style.opacity = String(1 - i * 0.06);
+      bar.append(b, make('span', null, `${LR.nf.format(num(c.sessoes))} sessões`));
+      row.append(make('span', 'lr-city-rank', String(i + 1)), name, bar);
+      return row;
+    }));
+  });
+
+  const DISPOSITIVOS = {mobile: 'Celular', desktop: 'Computador', tablet: 'Tablet', 'smart tv': 'TV'};
+
+  dash.draw('devices', (el) => {
+    const r = LR.ready(el, ['dispositivos']);
+    if (!r) return;
+    const rows = [...r[0]].sort((a, b) => num(b.sessions) - num(a.sessions));
+    const cor = (i) => [C.a, C.b, C.c][i] || C.m;
+    const linha = (rotulo, campo) => {
+      const total = d3.sum(rows, (d) => num(d[campo])) || 1;
+      const box = make('div', 'lr-split-row');
+      const bar = make('div', 'lr-split-bar');
+      rows.forEach((d, i) => {
+        const v = num(d[campo]);
+        if (!v) return;
+        const seg = make('div', LR.grow());
+        seg.style.flex = `${v} 1 0`;
+        seg.style.background = cor(i);
+        const texto = `${DISPOSITIVOS[d.devicecategory] || d.devicecategory} ${LR.FMT.pct0(v / total)}`;
+        if ((v / total) * (el.clientWidth || 300) > texto.length * 7.5 + 24) seg.textContent = texto;
+        bar.append(seg);
+      });
+      box.append(make('span', 'lr-split-label', rotulo), bar);
+      return box;
+    };
+    const legenda = make('div', 'lr-split-legend');
+    rows.forEach((d, i) => {
+      const item = make('div');
+      const sw = make('i', 'lr-sw');
+      sw.style.background = cor(i);
+      const nome = make('span', null, `${DISPOSITIVOS[d.devicecategory] || d.devicecategory}: `);
+      item.append(sw, nome, make('b', null, `${LR.nf.format(num(d.sessions))} sessões`), make('span', null, '·'), make('b', null, `${LR.nf.format(num(d.conversions_generate_lead))} leads`));
+      legenda.append(item);
+    });
+    el.replaceChildren(linha('Sessões', 'sessions'), linha('Leads', 'conversions_generate_lead'), legenda);
+  });
+
+  /* Relógio de 24 horas: cada barra é uma hora do dia. */
+  dash.draw('clock', (el) => {
+    const r = LR.ready(el, ['horas']);
+    if (!r) return;
+    const porHora = new Map(r[0].map((d) => [Number(d.hour), num(d.sessions)]));
+    const horas = d3.range(24).map((h) => ({h, v: porHora.get(h) || 0}));
+    el.replaceChildren();
+    const S = Math.min(300, Math.max(220, el.clientWidth || 260));
+    const R = S / 2 - 20, r0 = R * 0.42;
+    const max = d3.max(horas, (d) => d.v) || 1;
+    const rad = d3.scaleRadial([0, max], [r0, R]);
+    const a = (2 * Math.PI) / 24;
+    const svg = d3.select(el).append('svg').attr('width', S).attr('height', S).attr('viewBox', `${-S / 2} ${-S / 2} ${S} ${S}`).attr('role', 'img').attr('aria-label', 'Sessões por hora do dia');
+    [r0, (r0 + R) / 2, R].forEach((rr) => svg.append('circle').attr('r', rr).attr('fill', 'none').attr('stroke', C.grid));
+    const arc = d3.arc().innerRadius(r0 + 1).outerRadius((d) => Math.max(r0 + 2, rad(d.v))).startAngle((d) => d.h * a + 0.025).endAngle((d) => (d.h + 1) * a - 0.025).cornerRadius(2);
+    const tip = LR.tipFor(el);
+    svg.append('g').selectAll('path').data(horas).join('path')
+      .attr('d', arc).attr('fill', C.a).attr('opacity', (d) => 0.3 + 0.7 * (d.v / max))
+      .on('pointerenter pointermove', (ev, d) => {
+        const [x, y] = arc.centroid(d);
+        const off = (el.clientWidth - S) / 2;
+        LR.showTip(el, tip, off + x + S / 2, y + S / 2, `${d.h}h às ${d.h + 1}h`, [[null, `${LR.nf.format(d.v)} sessões`]]);
+      })
+      .on('pointerleave', () => { tip.hidden = true; });
+    [0, 6, 12, 18].forEach((h) => {
+      const ang = h * a;
+      svg.append('text').attr('class', 'lr-tick').attr('text-anchor', 'middle').attr('dy', '0.32em')
+        .attr('x', Math.sin(ang) * (R + 11)).attr('y', -Math.cos(ang) * (R + 11)).text(`${h}h`);
+    });
+    const pico = d3.greatest(horas, (d) => d.v);
+    if (pico && pico.v) {
+      svg.append('text').attr('class', 'lr-clock-peak').attr('text-anchor', 'middle').attr('dy', '0.15em').text(`${pico.h}h`);
+      svg.append('text').attr('class', 'lr-clock-cap').attr('text-anchor', 'middle').attr('dy', '1.9em').text('horário de pico');
+    }
+  });
+</script>
