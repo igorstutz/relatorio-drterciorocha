@@ -105,12 +105,12 @@ EXTRA = """
   .rel-links::-webkit-scrollbar { display: none; }
   .rel-links a {
     flex: none; font-size: 13px; color: var(--color-fg-muted); text-decoration: none; padding: 6px 12px; border-radius: 999px;
-    border: 1px solid var(--color-border-line); background: var(--color-panel); min-height: 32px; box-sizing: border-box; display: inline-flex; align-items: center;
+    border: 1px solid var(--color-border-line); background: var(--color-panel); min-height: 36px; box-sizing: border-box; display: inline-flex; align-items: center; transition: background 200ms, color 200ms;
   }
   .rel-links a:hover, .rel-links a:focus-visible { color: var(--color-fg); border-color: var(--cds-chart-categorical-1); outline: none; }
+  .rel-links a.ativo { color: #ffffff; background: #244c9a; border-color: transparent; }
   .lr { padding-block: var(--cds-pad-lg) 0; }
   .lr section, .lr header { scroll-margin-top: 72px; }
-  .lr code { font-size: 0.9em; }
 
   /* Abertura no marinho do site, nos dois temas. */
   .lr-hero {
@@ -153,6 +153,12 @@ EXTRA = """
     .lr-funnel-steps b { font-size: 22px; }
     .lr-funnel-steps span { font-size: 11.5px; }
     .lr-todo li { padding: 16px; }
+  }
+  @container lr (max-width: 27rem) {
+    .lr-hero-ring { grid-template-columns: 1fr; justify-items: center; }
+    .lr-ring { max-width: 10.5rem; }
+    .lr-ring-legend { max-width: 17rem; }
+    .lr h1 { font-size: 31px; }
   }
   @media (hover: none) { .lr-src-row, .lr-page, .lr-city { -webkit-tap-highlight-color: transparent; } }
 </style>
@@ -221,6 +227,22 @@ FINAL = """<script>
   const fechar = () => document.querySelectorAll('.lr-tip').forEach((t) => { t.hidden = true; });
   document.addEventListener('pointerdown', (ev) => { if (!ev.target.closest('svg, .lr-tile')) fechar(); });
   window.addEventListener('scroll', fechar, {passive: true});
+
+  const links = [...document.querySelectorAll('.rel-links a')];
+  const caixa = document.querySelector('.rel-links');
+  const porId = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
+  const marcar = (a) => {
+    links.forEach((l) => l.classList.toggle('ativo', l === a));
+    if (a && caixa) caixa.scrollTo({left: a.offsetLeft - (caixa.clientWidth - a.offsetWidth) / 2, behavior: 'smooth'});
+  };
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((itens) => {
+      itens.forEach((it) => { if (it.isIntersecting) marcar(porId.get(it.target.id)); });
+    }, {rootMargin: '-40% 0px -55% 0px'});
+    porId.forEach((a, id) => { const sec = document.getElementById(id); if (sec) obs.observe(sec); });
+    const topo = document.getElementById('topo');
+    if (topo) new IntersectionObserver((itens) => { if (itens[0].isIntersecting) marcar(null); }).observe(topo);
+  }
 </script>
 """
 
